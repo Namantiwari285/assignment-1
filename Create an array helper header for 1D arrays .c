@@ -1,71 +1,94 @@
-
-#ifndef ARRAYLIB_H
-#define ARRAYLIB_H
-int findMaxIndex(int arr[], int size); 
-int findMinIndex(int arr[], int size); 
-float findAverage(int arr[], int size); 
-void displayArray(int arr[], int size); 
-void reverseArray(int arr[], int size); 
-void sortArray(int arr[], int size); 
-int linearSearch(int arr[], int size, int value);
-
-#endif /* ARRAYLIB_H */
- 
 #include <stdio.h>
-#include "arraylib.h"
 
-int findMaxIndex(int arr[], int size) {
-    int idx = 0;
-    for(int i=1; i<size; i++)
-        if(arr[i] > arr[idx]) idx = i;
-    return idx;
-}
 
-int findMinIndex(int arr[], int size) {
-    int idx = 0;
-    for(int i=1; i<size; i++)
-        if(arr[i] < arr[idx]) idx = i;
-    return idx;
-}
 
-float findAverage(int arr[], int size) {
-    int sum = 0;
-    for(int i=0; i<size; i++) sum += arr[i];
-    return (float)sum / size;
+int maxIndex(int arr[], int n) {
+    int m = 0;
+    for(int i=1;i<n;i++){
+        if(arr[i]>arr[m]) m=i;
+    }
+    return m;
 }
 
 
-void displayArray(int arr[], int size) {
-    for(int i=0; i<size; i++)
-        printf("%d ", arr[i]);
+int minIndex(int arr[], int n) {
+    int m = 0;
+    for(int i=1;i<n;i++){
+        if(arr[i]<arr[m]) m=i;
+    }
+    return m;
+}
+
+
+float avg(int arr[], int n) {
+    int s=0;
+    for(int i=0;i<n;i++) s+=arr[i];
+    return (float)s/n;
+}
+
+
+void printArr(int arr[], int n) {
+    for(int i=0;i<n;i++) printf("%d ", arr[i]);
     printf("\n");
 }
 
-void reverseArray(int arr[], int size) {
-    for(int i=0; i<size/2; i++) {
-        int temp = arr[i];
-        arr[i] = arr[size-1-i];
-        arr[size-1-i] = temp;
+
+void revArr(int arr[], int n){
+    for(int i=0;i<n/2;i++){
+        int t=arr[i];
+        arr[i]=arr[n-1-i];
+        arr[n-1-i]=t;
     }
 }
 
-void sortArray(int arr[], int size) {
-    for(int i=0; i<size-1; i++)
-        for(int j=i+1; j<size; j++)
-            if(arr[i] > arr[j]) {
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
 
-int linearSearch(int arr[], int size, int value) {
-    for(int i=0; i<size; i++)
-        if(arr[i] == value) return i;
-    return -1;
+void sortArr(int arr[], int n){
+    for(int i=0;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            if(arr[i]>arr[j]){
+                int tmp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=tmp;
+            }
+        }
+    }
 }
 
 
+int findVal(int arr[], int n, int val){
+    for(int i=0;i<n;i++){
+        if(arr[i]==val) return i;
+    }
+    return -1; 
+}
 
-COMPILE AND RUN—
-gcc main.c arraylib.c -o prog
-./prog
+
+int main(){
+    int arr[]={12,5,7,3,9};
+    int n=sizeof(arr)/sizeof(arr[0]);
+
+    printf("Original array: ");
+    printArr(arr,n);
+
+    printf("Index of max: %d\n", maxIndex(arr,n));
+    printf("Index of min: %d\n", minIndex(arr,n));
+    printf("Average: %.2f\n", avg(arr,n));
+
+    printf("\nSorting...\n");
+    sortArr(arr,n);
+    printf("Sorted: ");
+    printArr(arr,n);
+
+    printf("\nReversing...\n");
+    revArr(arr,n);
+    printf("Reversed: ");
+    printArr(arr,n);
+
+    int v=7;
+    int p=findVal(arr,n,v);
+    if(p!=-1) printf("Value %d found at index %d\n",v,p);
+
+    else printf("Value %d not found\n",v);
+
+    return 0;
+}
