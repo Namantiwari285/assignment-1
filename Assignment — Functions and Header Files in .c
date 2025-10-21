@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <math.h>
 
-// Function to reverse the digits of a number
+
 int reverseNumber(int num) {
     int rev = 0;
     while (num > 0) {
@@ -21,7 +21,7 @@ int reverseNumber(int num) {
     return rev;
 }
 
-// Function to check if number is Armstrong
+
 int isArmstrong(int n) {
     int temp = n, count = 0, sum = 0;
 
@@ -40,7 +40,7 @@ int isArmstrong(int n) {
     return (sum == n);
 }
 
-// Function to check Adam number
+
 int isAdam(int n) {
     int sq = n * n;
     int rev = reverseNumber(n);
@@ -48,7 +48,7 @@ int isAdam(int n) {
     return (revSq == rev * rev);
 }
 
-// Function to check prime
+
 int isPrime(int n) {
     if (n <= 1) 
         return 0;
@@ -60,12 +60,11 @@ int isPrime(int n) {
     return 1;
 }
 
-// Function to check prime palindrome
+
 int isPrimePalindrome(int n) {
     return (isPrime(n) && n == reverseNumber(n));
 }
 
-// Main function
 int main() {
     int choice, number;
 
