@@ -1,74 +1,121 @@
-#include "naman.h"
 #include <stdio.h>
 #include <math.h>
 
-void displayArray(int arr[], int size) {
+void printList(int *list, int len) {
     printf("[");
-    for (int i = 0; i < size; i++) {
-        printf("%d", arr[i]);
-        if (i != size-1) printf(", ");
+    
+    
+    for (int k = 0; k < len; ++k) {
+        printf("%d", list[k]);
+        if (k < len - 1) printf(", ");
     }
     printf("]\n");
 }
 
-int findMaxIndex(int arr[], int size) {
-    int idx = 0;
-    for (int i=1; i<size; i++)
-        if (arr[i] > arr[idx]) idx = i;
-    return idx;
+int maxPosition(int *list, int len) {
+    int pos = 0;
+    for (int i = 1; i < len; ++i)
+        if (list[i] > list[pos]) pos = i;
+    return pos;
 }
 
-int findMinIndex(int arr[], int size) {
-    int idx = 0;
-    for (int i=1; i<size; i++)
-        if (arr[i] < arr[idx]) idx = i;
-    return idx;
+int minPosition(int *list, int len) {
+    int pos = 0;
+    for (int i = 1; i < len; ++i)
+        if (list[i] < list[pos]) pos = i;
+    return pos;
 }
 
-void reverseArray(int arr[], int size) {
-    for (int i=0; i<size/2; i++) {
-        int temp = arr[i];
-        arr[i] = arr[size-1-i];
-        arr[size-1-i] = temp;
+float calcMean(int *list, int len) {
+    int total = 0;
+    for (int j = 0; j < len; ++j) total += list[j];
+    return (float)total / len;
+}
+
+void flipArray(int *list, int len) {
+    for (int a = 0; a < len / 2; ++a) {
+        int tmp = list[a];
+        list[a] = list[len - 1 - a];
+        list[len - 1 - a] = tmp;
     }
 }
 
-
-float findAverage(int arr[], int size) {
-    int sum = 0;
-    for (int i=0; i<size; i++) sum += arr[i];
-    return (float)sum/size;
-}
-
-int linearSearch(int arr[], int size, int value) {
-    for (int i=0; i<size; i++)
-        if (arr[i] == value) return i;
+int locateValue(int *list, int len, int key) {
+    for (int i = 0; i < len; ++i)
+        if (list[i] == key) return i;
     return -1;
 }
-#include <stdio.h>
-#include "naman.h"
+
+
+
+int isArmstrong(int n) {
+    int original = n, sum = 0, digits = 0, temp = n;
+    while (temp > 0) {
+        digits++;
+        temp /= 10;
+    }
+    temp = n;
+    while (temp > 0) {
+        int d = temp % 10;
+        sum += (int)pow(d, digits);
+        temp /= 10;
+    }
+    return sum == original;
+}
+
+int reverseNum(int x) {
+    int res = 0;
+    while (x > 0) {
+        res = res * 10 + x % 10;
+        x /= 10;
+    }
+    return res;
+}
+
+int isAdams(int x) {
+    int sq = x * x;
+    int revX = reverseNum(x);
+    int revSq = revX * revX;
+    return reverseNum(sq) == revSq;
+}
+
+int isPrime(int val) {
+    if (val < 2) return 0;
+    for (int i = 2; i * i <= val; ++i)
+        if (val % i == 0) return 0;
+    return 1;
+}
+
+int isPalindrome(int val) {
+    return val == reverseNum(val);
+}
+
+int isPrimePalin(int x) {
+    return isPrime(x) && isPalindrome(x);
+}
+
+
 
 int main() {
-    int num = 12;
+    int testNum = 12;
+    int values[] = {3, 1, 4, 1, 5};
+    int count = sizeof(values)/sizeof(values[0]);
 
-    // Number functions
-    printf("Number functions:\n");
-    printf("%d is Armstrong? %s\n", num, isArmstrong(num) ? "Yes" : "No");
-    printf("%d is Adams? %s\n", num, isAdams(num) ? "Yes" : "No");
-    printf("%d is Prime Palindrome? %s\n", num, isPrimePalindrome(num) ? "Yes" : "No");
+    printf("Number Checks:\n");
+    printf("%d is Armstrong? %s\n", testNum, isArmstrong(testNum) ? "Yes" : "No");
+    printf("%d is Adams? %s\n", testNum, isAdams(testNum) ? "Yes" : "No");
+    printf("%d is Prime Palindrome? %s\n", testNum, isPrimePalin(testNum) ? "Yes" : "No");
 
-    // Array functions
-    int arr[] = {3,1,4,1,5};
-    int n = 5;
-
-    printf("\nArray functions:\n");
-    displayArray(arr, n);
-    printf("Max at index: %d\n", findMaxIndex(arr,n));
-    printf("Min at index: %d\n", findMinIndex(arr,n));
-    printf("Average: %.2f\n", findAverage(arr,n));
-    reverseArray(arr,n);
-    displayArray(arr,n);
-    printf("Search 4: index %d\n", linearSearch(arr,n,4));
+    printf("\nArray Operations:\n");
+    printList(values, count);
+    printf("Max at: %d\n", maxPosition(values, count));
+    printf("Min at: %d\n", minPosition(values, count));
+    printf("Mean: %.2f\n", calcMean(values, count));
+    
+    flipArray(values, count);
+    printList(values, count);
+    
+    printf("Position of 4: %d\n", locateValue(values, count, 4));
 
     return 0;
-} 
+}
