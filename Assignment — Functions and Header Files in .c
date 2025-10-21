@@ -12,20 +12,23 @@
                                                           
 #include<stdio.h>
 #include<math.h>. 
-// Function to reverse digits of a number 
+ 
 															
 int reverseDigits(int n) {
 int r = 0;
-while (n > 0) {    
+
+	while (n > 0) {    
 r = r * 10 + (n % 10);
 n /= 10;
 }
 return r;
 }
-// Function to check if number is Armstrong 
-int isArmstrong(int num) {
+ 
+int 
+isArmstrong(int num) {
 int original = num, sum = 0, digits = 0;
-int temp = num;
+int
+	temp = num;
 while (temp > 0) {
 digits++;
 temp /= 10;
@@ -37,7 +40,7 @@ sum += pow(d, digits);
 temp /= 10;
 }
 return sum == original;
-}// Function to check if number is Adams Number 
+} 
 int isAdams(int num) {
     int square = num * num;
     int reversedNum = reverseDigits(num);
@@ -45,13 +48,13 @@ int isAdams(int num) {
     return reversedSquare == (reversedNum * reversedNum);
 }
 }
-// Function to check if number is prime 
+ 
 int isPrime(int num) {
 if (num <= 1) return 0;
 for (int i = 2; i * i <= num; i++) {
 if (num % i == 0) return 0;
 }
-return 1;// Function to check if number is prime and palindrome //
+return 1;
  int isPrimePalindrome(int num) {
 return isPrime(num) && num == reverseDigits(num);
 }}
